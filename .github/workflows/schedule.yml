@@ -27,7 +27,7 @@ jobs:
           if [ "$HOUR" = "09" ] && [ "$MIN" = "30" ]; then
             echo "Starting Codespace..."
             gh codespace start silver-space-barnacle-jjwp75v9xx77h5j9j
-            gh codespace ssh silver-space-barnacle-jjwp75v9xx77h5j9j -c "./start-server.sh"
+            gh codespace ssh silver-space-barnacle-jjwp75v9xx77h5j9j -c "./oneblock.sh"
           fi
 
           if [ "$HOUR" = "11" ] && [ "$MIN" = "00" ]; then
