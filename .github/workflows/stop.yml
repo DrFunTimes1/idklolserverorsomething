@@ -1,0 +1,22 @@
+name: Stop Minecraft Server
+
+on:
+  schedule:
+    - cron: '0 11 * * *'   # 4:30 PM IST
+  workflow_dispatch:
+
+jobs:
+  stop:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install GitHub CLI
+        run: |
+          sudo apt update
+          sudo apt install gh -y
+
+      - name: Authenticate
+        run: echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
+
+      - name: Stop Codespace
+        run: gh codespace stop --codespace silver-space-barnacle-jjwp75v9xx77h5j9j
