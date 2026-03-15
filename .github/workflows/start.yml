@@ -1,5 +1,9 @@
 name: Start Minecraft Server
 
+permissions:
+  contents: read
+  actions: write
+  
 on:
   schedule:
     - cron: '30 09 * * *'   # 3:00 PM IST

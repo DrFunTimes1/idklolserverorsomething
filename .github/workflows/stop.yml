@@ -1,5 +1,9 @@
 name: Stop Minecraft Server
 
+permissions:
+  contents: read
+  actions: write
+
 on:
   schedule:
     - cron: '0 11 * * *'   # 4:30 PM IST
