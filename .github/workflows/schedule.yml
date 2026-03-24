@@ -10,5 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start OneBlock Server via SSH
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ssh user@your-server "tmux new -d -s mc '~/scripts/oneblock'"
+          gh codespace start -c "silver-space-barnacle-jjwp75v9xx77h5j9j"
+          sleep 10
+          gh codespace ssh -c "silver-space-barnacle-jjwp75v9xx77h5j9j" --command "cd /workspaces/idklolserverorsomething/scripts && ./oneblock.sh"
