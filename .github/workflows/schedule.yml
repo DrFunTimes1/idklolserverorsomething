@@ -14,6 +14,6 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        gh codespace start -c "silver-space-barnacle-jjwp75v9xx77h5j9j"
+        gh codespace start --codespace "silver-space-barnacle-jjwp75v9xx77h5j9j"
         sleep 20
         gh codespace ssh -c "silver-space-barnacle-jjwp75v9xx77h5j9j" --command "cd /workspaces/idklolserverorsomething/scripts && ./oneblock.sh"
