@@ -1,38 +1,17 @@
-name: Start OneBlock Server
+name: Start Codespace
 
 on:
   schedule:
-    - cron: '0 9 * * *'
-    - cron: '30 13 * * *'
-  workflow_dispatch:
+    - cron: '0 9 * * *'      # 9:00 AM GMT
+    - cron: '30 13 * * *'    # 13:30 PM GMT
 
 jobs:
-  start-server:
+  start-codespace:
     runs-on: ubuntu-latest
     steps:
-      #Checkout the repo
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      #Ensure the script is executable
-      - name: Make script executable
-        run: chmod +x ./scripts/oneblock.sh
-
-      #Ensure Codespace is running
-      - name: Start Codespace if not running
+      - name: Start Codespace
         run: |
-          CODESPACE_NAME="silver-space-barnacle-jjwp75v9xx77h5j9j"
-          STATUS=$(gh codespace list --json name,state | jq -r ".[] | select(.name==\"$CODESPACE_NAME\") | .state")
-          if [ "$STATUS" != "RUNNING" ]; then
-            echo "Starting Codespace $CODESPACE_NAME..."
-            gh codespace start $CODESPACE_NAME
-          else
-            echo "Codespace $CODESPACE_NAME is already running."
-          fi
-
-      #Run the OneBlock server script inside the Codespace
-      - name: Run OneBlock script
-        run: |
-          CODESPACE_NAME="silver-space-barnacle-jjwp75v9xx77h5j9j"
-          echo "Running oneblock.sh inside Codespace $CODESPACE_NAME..."
-          gh codespace ssh --codespace $CODESPACE_NAME -- bash -lc "/workspaces/idklolserverorsomething/scripts/oneblock.sh"
+          curl -X POST \
+          -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+          -H "Accept: application/vnd.github+json" \
+          https://api.github.com/user/codespaces/silver-space-barnacle-jjwp75v9xx77h5j9j/start
