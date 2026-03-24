@@ -16,6 +16,6 @@ jobs:
     steps:
     - name: Start OneBlock Server via SSH
       env:
-        GH_TOKEN: ${{ secrets.github_token }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         gh codespace ssh --codespace silver-space-barnacle-jjwp75v9xx77h5j9j -- bash -lc "cd /workspaces/idklolserverorsomething/scripts && ./oneblock.sh"
