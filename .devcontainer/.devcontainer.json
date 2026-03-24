@@ -2,5 +2,6 @@
   "name": "minecraft-server",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {},
-  "postCreateCommand": "sudo apt update && sudo apt install -y openjdk-21-jdk screen wget && cd /workspaces/idklolserverorsomething/scripts && chmod +x *.sh && chmod +x monitor.py && pip install discord.py mcstatus --target . && ./oneblock.sh"
+  "postCreateCommand": "sudo apt update && sudo apt install -y openjdk-21-jdk screen wget && cd /workspaces/idklolserverorsomething/scripts && pip install discord.py mcstatus --target . && chmod +x /workspaces/idklolserverorsomething/scripts/*.sh /workspaces/idklolserverorsomething/scripts/monitor.py",
+  "postStartCommand": "cd /workspaces/idklolserverorsomething/scripts && ./oneblock.sh"
 }
