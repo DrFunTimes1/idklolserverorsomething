@@ -37,7 +37,7 @@ async def check_server():
                 idle_time += 60
             else:
                 # 30 min passed → kill server
-                await channel.send("@everyoneServer shut down: no one joined.")
+                await channel.send("@everyone Server shut down: no one joined.")
                 subprocess.run(['./stopall.sh'])
     except Exception as e:
         print("Error checking server:", e)
