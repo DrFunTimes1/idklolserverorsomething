@@ -2,8 +2,9 @@ name: Start OneBlock Server
 
 on:
   schedule:
-    - cron: '0 9 * * *'     # 2:30 PM IST
-    - cron: '30 13 * * *'   # 7:00 PM IST
+    - cron: '0 9 * * *'     # 2:30 PM IST (09:00 UTC)
+    - cron: '30 13 * * *'   # 7:00 PM IST (13:30 UTC)
+  workflow_dispatch:
 
 jobs:
   start-server:
@@ -11,8 +12,17 @@ jobs:
     steps:
       - name: Start OneBlock Server via SSH
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }} # your PAT stored as an Actions secret
         run: |
+          # Authenticate GitHub CLI using PAT
+          echo "$GH_TOKEN" | gh auth login --with-token
+          gh auth status
+
+          # Start codespace
           gh codespace start -c "silver-space-barnacle-jjwp75v9xx77h5j9j"
-          sleep 10
+
+          # Wait a bit for the codespace to be ready
+          sleep 20
+
+          # Run your script
           gh codespace ssh -c "silver-space-barnacle-jjwp75v9xx77h5j9j" --command "cd /workspaces/idklolserverorsomething/scripts && ./oneblock.sh"
