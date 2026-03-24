@@ -10,19 +10,10 @@ jobs:
   start-server:
     runs-on: ubuntu-latest
     steps:
-      - name: Start OneBlock Server via SSH
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }} # your PAT stored as an Actions secret
-        run: |
-          # Authenticate GitHub CLI using PAT
-          echo "$GH_TOKEN" | gh auth login --with-token
-          gh auth status
-
-          # Start codespace
-          gh codespace start -c "silver-space-barnacle-jjwp75v9xx77h5j9j"
-
-          # Wait a bit for the codespace to be ready
-          sleep 20
-
-          # Run your script
-          gh codespace ssh -c "silver-space-barnacle-jjwp75v9xx77h5j9j" --command "cd /workspaces/idklolserverorsomething/scripts && ./oneblock.sh"
+    - name: Start OneBlock Server via SSH
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    run: |
+      gh codespace start -c "silver-space-barnacle-jjwp75v9xx77h5j9j"
+      sleep 20
+      gh codespace ssh -c "silver-space-barnacle-jjwp75v9xx77h5j9j" --command "cd /workspaces/idklolserverorsomething/scripts && ./oneblock.sh"
