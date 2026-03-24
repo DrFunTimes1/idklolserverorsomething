@@ -1,20 +1,38 @@
 name: Start OneBlock Server
 
-permissions:
-  contents: read
-
 on:
   schedule:
-    - cron: '0 9 * * *'     # 2:30 PM IST (09:00 UTC)
-    - cron: '30 13 * * *'   # 7:00 PM IST (13:30 UTC)
+    - cron: '0 9 * * *'
+    - cron: '30 13 * * *'
   workflow_dispatch:
 
 jobs:
   start-server:
     runs-on: ubuntu-latest
     steps:
-    - name: Start OneBlock Server via SSH
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      run: |
-        gh codespace ssh --codespace silver-space-barnacle-jjwp75v9xx77h5j9j -- bash -lc "bash -lc "/home/runner/work/idklolserverorsomething/idklolserverorsomething/scripts/oneblock.sh""
+      #Checkout the repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      #Ensure the script is executable
+      - name: Make script executable
+        run: chmod +x ./scripts/oneblock.sh
+
+      #Ensure Codespace is running
+      - name: Start Codespace if not running
+        run: |
+          CODESPACE_NAME="silver-space-barnacle-jjwp75v9xx77h5j9j"
+          STATUS=$(gh codespace list --json name,state | jq -r ".[] | select(.name==\"$CODESPACE_NAME\") | .state")
+          if [ "$STATUS" != "RUNNING" ]; then
+            echo "Starting Codespace $CODESPACE_NAME..."
+            gh codespace start $CODESPACE_NAME
+          else
+            echo "Codespace $CODESPACE_NAME is already running."
+          fi
+
+      #Run the OneBlock server script inside the Codespace
+      - name: Run OneBlock script
+        run: |
+          CODESPACE_NAME="silver-space-barnacle-jjwp75v9xx77h5j9j"
+          echo "Running oneblock.sh inside Codespace $CODESPACE_NAME..."
+          gh codespace ssh --codespace $CODESPACE_NAME -- bash -lc "/workspaces/idklolserverorsomething/scripts/oneblock.sh"
