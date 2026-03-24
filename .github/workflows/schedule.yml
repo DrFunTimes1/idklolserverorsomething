@@ -17,4 +17,8 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
+        echo "Current dir: $(pwd)"
+        ls -l
+        echo "Absolute path to scripts:"
+        readlink -f ./scripts/oneblock.sh || echo "Not found"
         gh codespace ssh --codespace silver-space-barnacle-jjwp75v9xx77h5j9j -- bash -lc "./workspaces/idklolserverorsomething/scripts/oneblock.sh"
