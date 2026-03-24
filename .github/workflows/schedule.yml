@@ -1,36 +1,14 @@
-name: Minecraft Server Schedule
+name: Start OneBlock Server
 
 on:
   schedule:
-    - cron: "30 9 * * *"   # 3:00 PM IST
-    - cron: "0 11 * * *"   # 4:30 PM IST
-  workflow_dispatch:
+    - cron: '0 9 * * *'     # 2:30 PM IST
+    - cron: '30 13 * * *'   # 7:00 PM IST
 
 jobs:
-  server:
+  start-server:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Install GitHub CLI
+      - name: Start OneBlock Server via SSH
         run: |
-          sudo apt update
-          sudo apt install gh -y
-
-      - name: Authenticate
-        run: echo "${{ secrets.GH_PAT }}" | gh auth login --with-token
-
-      - name: Start or Stop server
-        run: |
-          HOUR=$(date -u +%H)
-          MIN=$(date -u +%M)
-
-          if [ "$HOUR" = "09" ] && [ "$MIN" = "30" ]; then
-            echo "Starting Codespace..."
-            gh codespace start silver-space-barnacle-jjwp75v9xx77h5j9j
-            gh codespace ssh silver-space-barnacle-jjwp75v9xx77h5j9j -c "./oneblock.sh"
-          fi
-
-          if [ "$HOUR" = "11" ] && [ "$MIN" = "00" ]; then
-            echo "Stopping Codespace..."
-            gh codespace stop silver-space-barnacle-jjwp75v9xx77h5j9j
-          fi
+          ssh user@your-server "tmux new -d -s mc '~/scripts/oneblock'"
