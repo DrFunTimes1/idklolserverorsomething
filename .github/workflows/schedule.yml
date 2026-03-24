@@ -17,4 +17,4 @@ jobs:
         gh codespace ssh \
           --repo DrFunTimes1/idklolserverorsomething \
           --codespace silver-space-barnacle-jjwp75v9xx77h5j9j \
-          --command "cd /workspaces/idklolserverorsomething/scripts && ./oneblock.sh"
+          -- "cd /workspaces/idklolserverorsomething/scripts && ./oneblock.sh"
