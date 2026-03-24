@@ -15,7 +15,6 @@ jobs:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         gh codespace ssh \
-          --repo DrFunTimes1/idklolserverorsomething \
           --codespace silver-space-barnacle-jjwp75v9xx77h5j9j \
           -- bash -lc \
           "cd /workspaces/idklolserverorsomething/scripts && ./oneblock.sh"
