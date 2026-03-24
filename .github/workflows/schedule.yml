@@ -2,33 +2,20 @@ name: Start Codespace
 
 on:
   schedule:
-    # Runs at 09:00 GMT and 13:30 GMT
-    - cron: '0 9 * * *'
-    - cron: '30 13 * * *'
-  workflow_dispatch: # lets you manually trigger it too
+    - cron: '0 3 * * *'    # 9:00 AM GMT
+    - cron: '30 7 * * *'   # 13:30 PM GMT
+  workflow_dispatch:        # manual trigger
 
 jobs:
   start-codespace:
     runs-on: ubuntu-latest
     steps:
-      - name: Install GitHub CLI
-        run: |
-          sudo apt update
-          sudo apt install -y gh
-
-      - name: Authenticate with GH_TOKEN
+      - name: Start Codespace via API
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          echo "$GH_TOKEN" | gh auth login --with-token
-
-      - name: Start Codespace
-        env:
           CODESPACE_NAME: silver-space-barnacle-jjwp75v9xx77h5j9j
         run: |
-          echo "Starting Codespace $CODESPACE_NAME..."
           curl -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: token $GH_TOKEN" \
             https://api.github.com/user/codespaces/$CODESPACE_NAME/start
-          echo "Request sent. Codespace should be starting."
