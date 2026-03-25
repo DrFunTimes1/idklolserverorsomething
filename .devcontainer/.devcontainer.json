@@ -3,5 +3,5 @@
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {},
   "postCreateCommand": "sudo apt update && sudo apt install -y screen openjdk-21-jdk wget python3-pip && pip3 install discord.py mcstatus --target /workspaces/idklolserverorsomething/scripts && chmod +x /workspaces/idklolserverorsomething/scripts/*.sh /workspaces/idklolserverorsomething/scripts/monitor.py",
-  "postStartCommand": "bash -i -c 'cd /workspaces/idklolserverorsomething/scripts && ./oneblock.sh'"
+  "postStartCommand": "bash -i -c 'cd /workspaces/idklolserverorsomething/scripts && ./oneblock.sh' && sleep 9999999"
 }
